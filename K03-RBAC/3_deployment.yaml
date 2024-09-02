@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: app-container
+        image: larslefebvre/h4cking-workshop-demo-app:867361
+        ports:
+          - containerPort: 8080
+          - containerPort: 9999
+      serviceAccountName: dev-sa
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monitoring-deployment
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: monitoring-app
+  template:
+    metadata:
+      labels:
+        app: monitoring-app
+    spec:
+      containers:
+      - name: monitoring-container
+        image: larslefebvre/h4cking-workshop-demo-app:867361
+        ports:
+          - containerPort: 8080
+          - containerPort: 9999
+      serviceAccountName: monitoring-sa
