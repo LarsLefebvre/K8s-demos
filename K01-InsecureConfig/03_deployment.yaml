@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-app-insecure-config
-  namespace: annacon
+  namespace: dev
   labels:
     app: demo-app-insecure-config
 spec:
@@ -15,20 +15,8 @@ spec:
       labels:
         app: demo-app-insecure-config
     spec:
-      hostNetwork: true
-      hostPID: true
-      hostIPC: true
       containers:
       - name: demo-app-insecure-config
         image: larslefebvre/h4cking-workshop-demo-app:867361
         imagePullPolicy: IfNotPresent
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /host
-          name: noderoot
       serviceAccountName: demo-app-insecure-config
-      volumes:
-      - name: noderoot
-        hostPath:
-          path: /
